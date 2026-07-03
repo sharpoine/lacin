@@ -1,6 +1,4 @@
 "use client"
-import "@uiw/react-md-editor/markdown-editor.css"
-import "@uiw/react-markdown-preview/markdown.css"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import TiptapEditor from "@/components/admin/TiptapEditor"

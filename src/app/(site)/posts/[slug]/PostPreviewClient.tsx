@@ -1,7 +1,5 @@
 "use client"
 
-import MDEditor from "@uiw/react-md-editor"
-import "@uiw/react-markdown-preview/markdown.css"
 import { useEffect, useState } from "react"
 import { BookOpen, Calendar, Tag } from "lucide-react"
 
@@ -65,18 +63,10 @@ export function PostLayout({ post }: {
                 <hr className="my-8 border-slate-200" />
 
                 {/* Article Content */}
-                <article className="prose prose-slate max-w-none prose-headings:font-serif">
-                    <MDEditor.Markdown
-                        source={post.content || "*Henüz içerik girilmedi.*"}
-                        style={{
-                            backgroundColor: 'transparent',
-                            color: 'inherit',
-                            fontFamily: 'inherit',
-                            fontSize: '1rem',
-                            lineHeight: '1.75'
-                        }}
-                    />
-                </article>
+                <article 
+                    className="prose prose-slate max-w-none prose-headings:font-serif"
+                    dangerouslySetInnerHTML={{ __html: post.content || "<p><em>Henüz içerik girilmedi.</em></p>" }}
+                />
 
                 {/* Tags */}
                 {post.tags && post.tags.trim() && (
