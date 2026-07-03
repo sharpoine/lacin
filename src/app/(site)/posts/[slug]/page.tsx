@@ -3,18 +3,19 @@ import PostPreviewClient, { PostLayout } from './PostPreviewClient'
 import { notFound } from 'next/navigation'
 
 interface PageProps {
-    params: {
+    params: Promise<{
         slug: string
-    }
+    }>
 }
 
 //Seo için dinamik metadata
 export async function generateMetadata({ params }: PageProps) {
-    if (params.slug === "preview") {
+    const { slug } = await params;
+    if (slug === "preview") {
         return { title: 'Post Önizleme' }
     }
     const post = await prisma.post.findUnique({
-        where: { slug: params.slug },
+        where: { slug: slug },
         select: {
             title: true,
             description: true
@@ -28,14 +29,15 @@ export async function generateMetadata({ params }: PageProps) {
 }
 
 export default async function PostDetailPage({ params }: PageProps) {
-    if (params.slug === "preview") {
+    const { slug } = await params;
+    if (slug === "preview") {
         return <PostPreviewClient />
     }
 
     //include ilişkisel kategori verisini de getirmesi için ekleniyor
     const post = await prisma.post.findUnique({
         where: {
-            slug: params.slug,
+            slug: slug,
             published: true
         },
         include: {
